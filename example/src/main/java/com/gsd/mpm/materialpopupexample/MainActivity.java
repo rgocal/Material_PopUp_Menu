@@ -32,23 +32,33 @@ public class MainActivity extends AppCompatActivity {
         messageTwo = R.string.msg_two;
         messageThree = R.string.msg_three;
 
+        //Initialize the actions you want
+        //Set an ID, a Title, and a Resource
         final ActionItem dummyOne = new ActionItem(1, "Dummy 1", getResources().getDrawable(R.drawable.ic_settings));
         final ActionItem dummyTwo = new ActionItem(2, "Dummy 2", getResources().getDrawable(R.drawable.ic_settings));
         final ActionItem dummyThree = new ActionItem(3, "Dummy 3", getResources().getDrawable(R.drawable.ic_settings));
 
+        //Enable them to be sticky if you want the menu to not dismiss after clicking it
         dummyOne.setSticky(true);
         dummyTwo.setSticky(true);
         dummyThree.setSticky(false);
 
+        //Initialize the popup
         mQuickAction = new PopUpMenu(getBaseContext());
+        //Pretty obvious what this is
         mQuickAction.mAnimateTrack(true);
+        //Set true for white tinted action titles and resources, set false for black
         mQuickAction.setLightTheme(true);
+        //And again, pretty obvious what this is
         mQuickAction.setScrollBar(false);
 
+        //Add the actions to the popup menu
+        //Try adding if statements sometime to control what actions are present to the menu!
         mQuickAction.addActionItem(dummyOne);
         mQuickAction.addActionItem(dummyTwo);
         mQuickAction.addActionItem(dummyThree);
 
+        //Add listeners to each action item
         mQuickAction.setOnActionItemClickListener(new PopUpMenu.OnActionItemClickListener() {
             @Override
             public void onItemClick(PopUpMenu source, int pos, int actionId) {
@@ -65,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Add a dismiss listener
+        //Remove if you want to disregard
         mQuickAction.setOnDismissListener(new PopUpMenu.OnDismissListener() {
             @Override
             public void onDismiss() {
