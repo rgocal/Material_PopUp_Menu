@@ -28,5 +28,6 @@ A nostalgic dialog action menu from Android 2.3 re-invented for Material Design
     
     
   #Keeping It Simple
-  Just take a look at the example app. Once I get everything working to my standards, I'll a fully documented setup.
+
+Just take a look at the example app. Once I get everything working to my standards, I'll do a fully documented setup.
   
