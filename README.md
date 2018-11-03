@@ -3,14 +3,14 @@ A nostalgic dialog action menu from Android 2.3 re-invented for Material Design
 
 #Getting Setup!
 
-allprojects {
+	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
 		}
 	}
   
-  dependencies {
+  	dependencies {
 	        implementation 'com.github.rgocal:Material_PopUp_Menu:master-SNAPSHOT'
 	}
   
