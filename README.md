@@ -1,5 +1,5 @@
 # Material_PopUp_Menu
-A nostalgic dialog action menu from Android 2.3 re-invented for Material Design
+A nostalgic dialog action menu from Android 2.3 re-invented for Material Design. This popup menu was originally used in ADW Launcher from CM7. I wanted something nostalgic to return in Sapphyx Launcher and came up with this rather simple library that can be used for a number of things. Very useful in listview or recyclerview long click popups. I am seeking some help from material design devs to make it look even more cleaner. If you want to contribute, theirs a todo list at the bottom! Material Popup was originally built for my Launcher Project Sapphyx but alot of my users liked the idea of it returning, So I extracted it as a library. Enjoy! 
 
 #Getting Setup!
 
@@ -31,3 +31,9 @@ A nostalgic dialog action menu from Android 2.3 re-invented for Material Design
 
 Just take a look at the example app. Once I get everything working to my standards, I'll do a fully documented setup.
   
+
+#ToDo List
+- Programicaly set background colors for assets instead of strings. (Mainly for Sapphyx Launcher so I can pull icon colors for the menu) 
+- Badge Support for Action Items
+- Wrap Menu against number of items available or set a maximum screen width consumption. 
+- Vertical Orientation mode? 
