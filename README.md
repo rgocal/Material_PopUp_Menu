@@ -26,7 +26,7 @@ allprojects {
     <!--The track color is the menu left and right dividers, set to the same color as the scroll color to disable -->
     <color name="popup_track_color">@android:color/holo_blue_dark</color>
     
-    #Keeping It Simple
     
-    Just take a look at the example app. Once I get everything working to my standards, I'll a fully documented setup.
+  #Keeping It Simple
+  Just take a look at the example app. Once I get everything working to my standards, I'll a fully documented setup.
   
