@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:scaleType="centerInside"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:src="@drawable/ic_settings"/>
+
+    <com.gsd.mpm.materialpopupmenu.GoogleTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:text="title"/>
+
+</LinearLayout>

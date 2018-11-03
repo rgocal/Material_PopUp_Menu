@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MaterialPopUpExample</string>
+    <string name="action_settings">Settings</string>
+    <string name="msg_one">This is position 1</string>
+    <string name="msg_two">Hello there position 2</string>
+    <string name="msg_three">Almost forgot about position 3</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="popup_body_color">@color/colorPrimaryDark</color>
+    <color name="popup_scrim_color">@color/colorAccent</color>
+    <color name="popup_scroll_color">@color/colorPrimary</color>
+    <color name="popup_track_color">@color/colorAccent</color>
+
+
+</resources>
