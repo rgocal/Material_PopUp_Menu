@@ -32,13 +32,11 @@
 
             <View
                 android:id="@+id/start_track"
-                android:background="@color/popup_track_color"
                 android:layout_width="4dp"
                 android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/end_track"
-                android:background="@color/popup_track_color"
                 android:layout_width="4dp"
                 android:layout_height="match_parent" />
         </LinearLayout>
