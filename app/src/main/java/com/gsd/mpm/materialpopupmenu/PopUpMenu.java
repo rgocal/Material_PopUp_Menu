@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,13 +40,6 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private boolean isLight;
     private boolean isEnabled;
 
-    //Eventually we will get to pragmatically set colors
-    //If I can get it to tint properly
-    private int scrollColor;
-    private int scrimColor;
-    private int bodyColor;
-    private int trackColor;
-
     private int mChildPos;
     private int mAnimStyle;
 
@@ -54,14 +48,48 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private static final int ANIM_GROW_FROM_CENTER = 3;
     private static final int ANIM_AUTO = 4;
 
+    private int mScrollColor;
+    private int mBodyColor;
+    private int mTrackColor;
+
+    private int i;
+
     private ActionItem getActionItem(int index) {
         return mActionItemList.get(index);
     }
 
     public PopUpMenu(Context context) {
         super(context);
-        inflater 	= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mTrackAnim 	= AnimationUtils.loadAnimation(context, R.anim.rail);
+        setRootViewId(R.layout.quick_action_menu);
+    }
+
+    public void setScrollColor(int scrollColor) {
+        this.mScrollColor = scrollColor;
+    }
+
+    public void setTrackColor(int trackColor) {
+        this.mTrackColor = trackColor;
+    }
+
+    public void setBodyColor(int bodyColor) {
+        this.mBodyColor = bodyColor;
+    }
+
+    public int getScrollColor(){
+        return mScrollColor;
+    }
+
+    private int getTrackColor(){
+        return mTrackColor;
+    }
+
+    private int getBodyColor(){
+        return mBodyColor;
+    }
+
+    private void setRootViewId(int id) {
+        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mTrackAnim = AnimationUtils.loadAnimation(mContext, R.anim.rail);
         mTrackAnim.setInterpolator(new Interpolator() {
             public float getInterpolation(float t) {
                 final float inner = (t * 1.55f) - 1.1f;
@@ -69,17 +97,13 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
             }
         });
 
-        setRootViewId(R.layout.quick_action_menu);
-
-        isLight = true;
-        mAnimStyle = ANIM_AUTO;
-        mAnimateTrack = true;
-        mChildPos = 0;
-    }
-
-    private void setRootViewId(int id) {
         mRootView = inflater.inflate(id, null);
         mTrack = mRootView.findViewById(R.id.tracks);
+
+        //How do we correctly set colors pragmatically?
+        mScrollColor = mContext.getColor(R.color.popup_scroll_color);
+        mTrackColor = mContext.getColor(R.color.popup_track_color);
+        mBodyColor = mContext.getColor(R.color.popup_body_color);
 
         //Popup Arrows
         mArrowDown = mRootView.findViewById(R.id.arrow_down);
@@ -89,17 +113,38 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         FrameLayout header = mRootView.findViewById(R.id.header2);
         FrameLayout footer = mRootView.findViewById(R.id.footer);
 
+        header.setBackgroundColor(getBodyColor());
+        footer.setBackgroundColor(getBodyColor());
+
         //StartHeader
         header.setBackgroundResource(R.drawable.qa_round_top);
-        Drawable drawableHeader = header.getBackground();
+        GradientDrawable drawableHeader = (GradientDrawable) header.getBackground();
+        if (i % 2 == 0) {
+            drawableHeader.setColor(getBodyColor());
             drawableHeader.setBounds(300, 300, 300, 300);
+            //We will set user set values later
+            //int topRadias = 16;
+            //drawableHeader.setCornerRadius(topRadias);
+        } else {
+            drawableHeader.setColor(getBodyColor());
+            drawableHeader.setBounds(300, 300, 300, 300);
+        }
         header.setBackground(drawableHeader);
         //EndHeader
 
         //StartFooter
         footer.setBackgroundResource(R.drawable.qa_round_bottom);
-        Drawable drawableFooter = footer.getBackground();
+        GradientDrawable drawableFooter = (GradientDrawable) footer.getBackground();
+        if (i % 2 == 0) {
+            drawableFooter.setColor(getBodyColor());
             drawableFooter.setBounds(300, 300, 300, 300);
+            //We will set user set values later
+            //int bottomRadias = 16;
+            //drawableFooter.setCornerRadius(bottomRadias);
+        } else {
+            drawableFooter.setColor(getBodyColor());
+            drawableFooter.setBounds(300, 300, 300, 300);
+        }
         footer.setBackground(drawableFooter);
         //EndFooter
 
@@ -108,9 +153,12 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         View startTrack = mRootView.findViewById(R.id.start_track);
         View endTrack = mRootView.findViewById(R.id.end_track);
 
+        startTrack.setBackgroundColor(getTrackColor());
+        endTrack.setBackgroundColor(getTrackColor());
+
         //Popup Background
         HorizontalScrollView scroll = mRootView.findViewById(R.id.scroll);
-        scroll.setBackgroundColor(mContext.getColor(R.color.popup_scroll_color));
+        scroll.setBackgroundColor(getScrollColor());
         scroll.setHorizontalScrollBarEnabled(isEnabled);
 
         setContentView(mRootView);
@@ -252,6 +300,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         final View hideArrow = (whichArrow == R.id.arrow_up) ? mArrowDown : mArrowUp;
         final int arrowWidth = mArrowUp.getMeasuredWidth();
         showArrow.setVisibility(View.VISIBLE);
+        ((ImageView) showArrow).setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_IN);
         ViewGroup.MarginLayoutParams param = (ViewGroup.MarginLayoutParams)showArrow.getLayoutParams();
         param.leftMargin = requestedX - arrowWidth / 2;
         hideArrow.setVisibility(View.INVISIBLE);
