@@ -2,6 +2,7 @@ package com.gsd.mpm.materialpopupexample;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -44,13 +45,20 @@ public class MainActivity extends AppCompatActivity {
         dummyThree.setSticky(false);
 
         //Initialize the popup
-        mQuickAction = new PopUpMenu(getBaseContext());
+        mQuickAction = new PopUpMenu(MainActivity.this);
         //Pretty obvious what this is
         mQuickAction.mAnimateTrack(true);
         //Set true for white tinted action titles and resources, set false for black
         mQuickAction.setLightTheme(true);
         //And again, pretty obvious what this is
         mQuickAction.setScrollBar(false);
+        //Set animation style
+        mQuickAction.setAnimStyle(4);
+
+        //Not working yet...
+        //mQuickAction.setScrollColor(R.color.orange);
+        //mQuickAction.setTrackColor(R.color.orange);
+        //mQuickAction.setBodyColor(R.color.purple);
 
         //Add the actions to the popup menu
         //Try adding if statements sometime to control what actions are present to the menu!
