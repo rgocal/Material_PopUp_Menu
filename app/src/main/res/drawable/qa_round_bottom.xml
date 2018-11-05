@@ -8,5 +8,4 @@
         android:left="8dp"
         android:bottom="2dp"
         android:right="8dp" />
-    <solid android:color="@color/popup_body_color"/>
 </shape>
