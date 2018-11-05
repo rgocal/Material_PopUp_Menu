@@ -4,12 +4,12 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <!--The body color is the top and bottom headers and the arrow color -->
-    <color name="popup_body_color">@android:color/holo_blue_dark</color>
-    <!--The scrim color is the scrollbar color if enabled -->
-    <color name="popup_scrim_color">@android:color/holo_blue_dark</color>
-    <!--The scroll color is the background menu color -->
-    <color name="popup_scroll_color">@android:color/holo_blue_dark</color>
-    <!--The track color is the menu left and right dividers, set to the same color as the scroll color to disable -->
-    <color name="popup_track_color">@android:color/holo_blue_dark</color>
+    <color name="orange">#FFA726</color>
+    <color name="red">#EF5350</color>
+    <color name="pink">#F06292</color>
+    <color name="purple">#7E57C2</color>
+
+    <color name="popup_body_color">@color/purple</color>
+    <color name="popup_scroll_color">@color/purple</color>
+    <color name="popup_track_color">@color/purple</color>
 </resources>
