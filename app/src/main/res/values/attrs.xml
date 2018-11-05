@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PopUp">
+        <attr name="scrollColor" format="color" />
+        <attr name="trackColor" format="color" />
+        <attr name="bodyColor" format="color" />
+    </declare-styleable>
+</resources>
