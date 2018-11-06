@@ -6,6 +6,9 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +42,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private boolean mAnimateTrack;
     private boolean isLight;
     private boolean isEnabled;
+    private boolean hasTitles;
 
     private int mChildPos;
     private int mAnimStyle;
@@ -53,6 +57,8 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private int mTrackColor;
 
     private int i;
+    private boolean onTop;
+    private int rootWidth, rootHeight, screenWidth, xPos, yPos;
 
     private ActionItem getActionItem(int index) {
         return mActionItemList.get(index);
@@ -64,27 +70,15 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     }
 
     public void setScrollColor(int scrollColor) {
-        this.mScrollColor = scrollColor;
+        this.mScrollColor = ContextCompat.getColor(mContext, scrollColor);
     }
 
     public void setTrackColor(int trackColor) {
-        this.mTrackColor = trackColor;
+        this.mTrackColor = ContextCompat.getColor(mContext, trackColor);
     }
 
     public void setBodyColor(int bodyColor) {
-        this.mBodyColor = bodyColor;
-    }
-
-    public int getScrollColor(){
-        return mScrollColor;
-    }
-
-    private int getTrackColor(){
-        return mTrackColor;
-    }
-
-    private int getBodyColor(){
-        return mBodyColor;
+        this.mBodyColor = ContextCompat.getColor(mContext, bodyColor);
     }
 
     private void setRootViewId(int id) {
@@ -113,39 +107,20 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         FrameLayout header = mRootView.findViewById(R.id.header2);
         FrameLayout footer = mRootView.findViewById(R.id.footer);
 
-        header.setBackgroundColor(getBodyColor());
-        footer.setBackgroundColor(getBodyColor());
-
         //StartHeader
-        header.setBackgroundResource(R.drawable.qa_round_top);
-        GradientDrawable drawableHeader = (GradientDrawable) header.getBackground();
-        if (i % 2 == 0) {
-            drawableHeader.setColor(getBodyColor());
-            drawableHeader.setBounds(300, 300, 300, 300);
-            //We will set user set values later
-            //int topRadias = 16;
-            //drawableHeader.setCornerRadius(topRadias);
-        } else {
-            drawableHeader.setColor(getBodyColor());
-            drawableHeader.setBounds(300, 300, 300, 300);
+        Drawable mDrawableHeader = ContextCompat.getDrawable(mContext, R.drawable.qa_round_top);
+        if (mDrawableHeader != null) {
+            mDrawableHeader.setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_ATOP);
         }
-        header.setBackground(drawableHeader);
+        header.setBackground(mDrawableHeader);
         //EndHeader
 
         //StartFooter
-        footer.setBackgroundResource(R.drawable.qa_round_bottom);
-        GradientDrawable drawableFooter = (GradientDrawable) footer.getBackground();
-        if (i % 2 == 0) {
-            drawableFooter.setColor(getBodyColor());
-            drawableFooter.setBounds(300, 300, 300, 300);
-            //We will set user set values later
-            //int bottomRadias = 16;
-            //drawableFooter.setCornerRadius(bottomRadias);
-        } else {
-            drawableFooter.setColor(getBodyColor());
-            drawableFooter.setBounds(300, 300, 300, 300);
+        Drawable mDrawableFooter = ContextCompat.getDrawable(mContext, R.drawable.qa_round_bottom);
+        if (mDrawableFooter != null) {
+            mDrawableFooter.setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_ATOP);
         }
-        footer.setBackground(drawableFooter);
+        footer.setBackground(mDrawableFooter);
         //EndFooter
 
         //Popup Track
@@ -164,6 +139,18 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         setContentView(mRootView);
     }
 
+    public int getScrollColor(){
+        return mScrollColor;
+    }
+
+    private int getTrackColor(){
+        return mTrackColor;
+    }
+
+    private int getBodyColor(){
+        return mBodyColor;
+    }
+
     //Animate the menu track
     public void mAnimateTrack(boolean mAnimateTrack) {
         this.mAnimateTrack = mAnimateTrack;
@@ -178,6 +165,10 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     //Set Light or Dark styled icons and text
     public void setLightTheme(boolean isLight) {
         this.isLight = isLight;
+    }
+
+    public void setHasTitles(boolean hasTitles){
+        this.hasTitles = hasTitles;
     }
 
     //Set Scrollbar
@@ -210,6 +201,13 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         } else {
             text.setVisibility(View.GONE);
         }
+
+        if(hasTitles){
+            text.setVisibility(View.VISIBLE);
+        }else{
+            text.setVisibility(View.GONE);
+        }
+
         final int pos = mChildPos;
         final int actionId = action.getActionId();
         container.setOnClickListener(new OnClickListener() {
@@ -241,23 +239,27 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
 
     public void show (View anchor) {
         preShow();
-        int[] location 	= new int[2];
-        mDidAction 	= false;
+        int[] location = new int[2];
+        mDidAction = false;
         anchor.getLocationOnScreen(location);
 
         Rect anchorRect = new Rect(location[0], location[1], location[0] + anchor.getWidth(), location[1]
                 + anchor.getHeight());
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+
         mRootView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        int rootWidth 		= mRootView.getMeasuredWidth();
-        int rootHeight 		= mRootView.getMeasuredHeight();
-        int screenWidth 	= mWindowManager.getDefaultDisplay().getWidth();
-        int xPos 			= (screenWidth - rootWidth) / 2;
-        int yPos	 		= anchorRect.top - rootHeight;
-        boolean onTop		= true;
+        rootWidth = mRootView.getMeasuredWidth();
+        rootHeight = mRootView.getMeasuredHeight();
+        mWindowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        screenWidth = displayMetrics.widthPixels;
+        xPos = (screenWidth - rootWidth) / 2;
+        yPos = anchorRect.top - rootHeight;
+        onTop = true;
         if (rootHeight > anchor.getTop()) {
-            yPos 	= anchorRect.bottom;
-            onTop	= false;
+            yPos = anchorRect.bottom;
+            onTop = false;
         }
 
         showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), anchorRect.centerX());
