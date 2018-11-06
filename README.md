@@ -37,3 +37,4 @@ Just take a look at the example app. Once I get everything working to my standar
 - Badge Support for Action Items
 - Wrap Menu against number of items available or set a maximum screen width consumption. 
 - Vertical Orientation mode? 
+- Center items available 
