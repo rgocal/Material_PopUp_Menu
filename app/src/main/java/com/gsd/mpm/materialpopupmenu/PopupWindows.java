@@ -21,8 +21,9 @@ public class PopupWindows {
     View mRootView;
     private Drawable mBackground = null;
     WindowManager mWindowManager;
+
     PopupWindows(Context context) {
-        mContext= context;
+        mContext = context;
         mWindow = new PopupWindow(context);
         mWindow.setTouchInterceptor(new OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")

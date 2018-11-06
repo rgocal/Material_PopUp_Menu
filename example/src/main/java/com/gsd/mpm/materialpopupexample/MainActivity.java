@@ -54,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
         mQuickAction.setScrollBar(false);
         //Set animation style
         mQuickAction.setAnimStyle(4);
+        //Set has titles or not
+        mQuickAction.setHasTitles(true);
 
         //Not working yet...
-        //mQuickAction.setScrollColor(R.color.orange);
-        //mQuickAction.setTrackColor(R.color.orange);
-        //mQuickAction.setBodyColor(R.color.purple);
+        mQuickAction.setScrollColor(R.color.orange);
+        mQuickAction.setTrackColor(R.color.orange);
+        mQuickAction.setBodyColor(R.color.orange);
 
         //Add the actions to the popup menu
         //Try adding if statements sometime to control what actions are present to the menu!
