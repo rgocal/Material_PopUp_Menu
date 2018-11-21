@@ -56,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         mQuickAction.setAnimStyle(4);
         //Set has titles or not
         mQuickAction.setHasTitles(true);
+        //Set Track visiblity (LEFT and RIGHT DIVIDERS)
+        mQuickAction.setEnableTracks(false);
 
-        //Not working yet...
-        //mQuickAction.setScrollColor(R.color.orange);
-        //mQuickAction.setTrackColor(R.color.orange);
-        //mQuickAction.setBodyColor(R.color.orange);
+        //Set Popup Colors programically or override the Strings
+        mQuickAction.setScrollColor(R.color.orange);
+        mQuickAction.setTrackColor(R.color.orange);
+        mQuickAction.setBodyColor(R.color.orange);
 
         //Add the actions to the popup menu
         //Try adding if statements sometime to control what actions are present to the menu!
