@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,6 +35,11 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private OnActionItemClickListener mItemClickListener;
     private OnDismissListener mDismissListener;
 
+    private View startTrack, endTrack;
+    private Drawable mDrawableFooter, mDrawableHeader, wrappedHeader, wrappedFooter, mDrawableBody, wrappedBody, mDrawableTrack, wrappedTrack;
+    private FrameLayout header, footer;
+    private HorizontalScrollView scroll;
+
     private List<ActionItem> mActionItemList = new ArrayList<>();
 
     private boolean mDidAction;
@@ -41,6 +47,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private boolean isLight;
     private boolean isEnabled;
     private boolean hasTitles;
+    private boolean isTrackEnabled;
 
     private int mChildPos;
     private int mAnimStyle;
@@ -69,14 +76,55 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
 
     public void setScrollColor(int scrollColor) {
         this.mScrollColor = ContextCompat.getColor(mContext, scrollColor);
+
+        mDrawableBody = ContextCompat.getDrawable(mContext, R.drawable.scroll_background);
+        assert mDrawableBody != null;
+        wrappedBody = DrawableCompat.wrap(mDrawableBody);
+        DrawableCompat.setTint(wrappedBody, mScrollColor);
+        wrappedBody.invalidateSelf();
+        scroll.setBackground(wrappedBody);
     }
 
     public void setTrackColor(int trackColor) {
         this.mTrackColor = ContextCompat.getColor(mContext, trackColor);
+
+        mDrawableTrack = ContextCompat.getDrawable(mContext, R.drawable.track_background);
+        assert mDrawableTrack != null;
+        wrappedTrack = DrawableCompat.wrap(mDrawableTrack);
+        DrawableCompat.setTint(wrappedTrack, mTrackColor);
+        wrappedTrack.invalidateSelf();
+
+        startTrack.setBackground(wrappedTrack);
+        endTrack.setBackground(wrappedTrack);
     }
 
     public void setBodyColor(int bodyColor) {
         this.mBodyColor = ContextCompat.getColor(mContext, bodyColor);
+
+        mDrawableHeader = ContextCompat.getDrawable(mContext, R.drawable.qa_round_top);
+        assert mDrawableHeader != null;
+        wrappedHeader = DrawableCompat.wrap(mDrawableHeader);
+        DrawableCompat.setTint(wrappedHeader, mBodyColor);
+        wrappedHeader.invalidateSelf();
+
+        header.setBackground(wrappedHeader);
+
+        mDrawableFooter = ContextCompat.getDrawable(mContext, R.drawable.qa_round_bottom);
+        assert mDrawableFooter != null;
+        wrappedFooter = DrawableCompat.wrap(mDrawableFooter);
+        DrawableCompat.setTint(wrappedFooter, mBodyColor);
+        wrappedFooter.invalidateSelf();
+
+        footer.setBackground(wrappedFooter);
+
+    }
+
+    public int getScrollColor(){
+        return mScrollColor;
+    }
+
+    private int getBodyColor(){
+        return mBodyColor;
     }
 
     private void setRootViewId(int id) {
@@ -92,61 +140,23 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         mRootView = inflater.inflate(id, null);
         mTrack = mRootView.findViewById(R.id.tracks);
 
-        //How do we correctly set colors pragmatically?
+        //Set the pop colors by strings if desired
         mScrollColor = mContext.getColor(R.color.popup_scroll_color);
         mTrackColor = mContext.getColor(R.color.popup_track_color);
         mBodyColor = mContext.getColor(R.color.popup_body_color);
 
-        //Popup Arrows
+        //Initialize the IDs
         mArrowDown = mRootView.findViewById(R.id.arrow_down);
         mArrowUp = mRootView.findViewById(R.id.arrow_up);
+        header = mRootView.findViewById(R.id.header2);
+        footer = mRootView.findViewById(R.id.footer);
+        startTrack = mRootView.findViewById(R.id.start_track);
+        endTrack = mRootView.findViewById(R.id.end_track);
+        scroll = mRootView.findViewById(R.id.scroll);
 
-        //Popup Menu Body
-        FrameLayout header = mRootView.findViewById(R.id.header2);
-        FrameLayout footer = mRootView.findViewById(R.id.footer);
-
-        //StartHeader
-        Drawable mDrawableHeader = ContextCompat.getDrawable(mContext, R.drawable.qa_round_top);
-        if (mDrawableHeader != null) {
-            mDrawableHeader.setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_ATOP);
-        }
-        header.setBackground(mDrawableHeader);
-        //EndHeader
-
-        //StartFooter
-        Drawable mDrawableFooter = ContextCompat.getDrawable(mContext, R.drawable.qa_round_bottom);
-        if (mDrawableFooter != null) {
-            mDrawableFooter.setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_ATOP);
-        }
-        footer.setBackground(mDrawableFooter);
-        //EndFooter
-
-        //Popup Track
-        //To disable them, just keep them the same color as the scroll color
-        View startTrack = mRootView.findViewById(R.id.start_track);
-        View endTrack = mRootView.findViewById(R.id.end_track);
-
-        startTrack.setBackgroundColor(getTrackColor());
-        endTrack.setBackgroundColor(getTrackColor());
-
-        //Popup Background
-        HorizontalScrollView scroll = mRootView.findViewById(R.id.scroll);
-        scroll.setBackgroundColor(getScrollColor());
         scroll.setHorizontalScrollBarEnabled(isEnabled);
 
         setContentView(mRootView);
-    }
-
-    public int getScrollColor(){
-        return mScrollColor;
-    }
-
-    private int getTrackColor(){
-        return mTrackColor;
-    }
-
-    private int getBodyColor(){
-        return mBodyColor;
     }
 
     //Animate the menu track
@@ -163,6 +173,18 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     //Set Light or Dark styled icons and text
     public void setLightTheme(boolean isLight) {
         this.isLight = isLight;
+    }
+
+    //Toggle Tracks
+    public void setEnableTracks(boolean enableTracks){
+        this.isTrackEnabled = enableTracks;
+        if(isTrackEnabled){
+            startTrack.setVisibility(View.VISIBLE);
+            endTrack.setVisibility(View.VISIBLE);
+        }else {
+            startTrack.setVisibility(View.GONE);
+            endTrack.setVisibility(View.GONE);
+        }
     }
 
     public void setHasTitles(boolean hasTitles){
