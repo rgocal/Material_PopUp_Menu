@@ -11,7 +11,8 @@ A nostalgic dialog action menu from Android 2.3 re-invented for Material Design.
 	}
   
   	dependencies {
-	        implementation 'com.github.rgocal:Material_PopUp_Menu:Tag'
+	        implementation 'com.github.rgocal:Material_PopUp_Menu:1.05'
+
 
 	}
   
