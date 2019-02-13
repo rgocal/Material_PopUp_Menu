@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
-public class GoogleTextView extends android.support.v7.widget.AppCompatTextView {
+public class GoogleTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     public GoogleTextView(Context context) {
         super(context);
