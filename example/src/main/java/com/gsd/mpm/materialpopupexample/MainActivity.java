@@ -58,11 +58,25 @@ public class MainActivity extends AppCompatActivity {
         mQuickAction.setHasTitles(true);
         //Set Track visiblity (LEFT and RIGHT DIVIDERS)
         mQuickAction.setEnableTracks(false);
+        //Set Menu Title
+        mQuickAction.hasSubTitle(true);
+        String menuTitle = "Material Popup";
+        mQuickAction.setMenuTitle(menuTitle);
+        //Set Menu SubTitle
+        mQuickAction.hasSubTitle(true);
+        String menuSubTitle = "A nostalgic popup menu with a Material Redesign. This subTitle is clickable!";
+        mQuickAction.setSubMenuTitle(menuSubTitle);
+        mQuickAction.setSubTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "This is pretty cool", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Set Popup Colors programically or override the Strings
-        mQuickAction.setScrollColor(R.color.orange);
-        mQuickAction.setTrackColor(R.color.orange);
-        mQuickAction.setBodyColor(R.color.orange);
+        mQuickAction.setScrollColor(ContextCompat.getColor(this, R.color.orange));
+        mQuickAction.setTrackColor(ContextCompat.getColor(this, R.color.orange));
+        mQuickAction.setBodyColor(ContextCompat.getColor(this, R.color.orange));
 
         //Add the actions to the popup menu
         //Try adding if statements sometime to control what actions are present to the menu!

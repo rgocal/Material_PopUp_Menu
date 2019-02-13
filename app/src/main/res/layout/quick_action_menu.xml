@@ -5,9 +5,24 @@
 
     <FrameLayout
         android:id="@+id/header2"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_width="match_parent"
-        android:layout_height="4dp" />
+        android:layout_height="wrap_content" >
+
+        <com.gsd.mpm.materialpopupmenu.GoogleTextView
+            android:id="@+id/menu_title"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_gravity="center|start"
+            android:layout_marginStart="16dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="Menu Title" />
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/arrow_up"
@@ -20,9 +35,10 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_below="@id/header2"
         android:paddingEnd="2dp"
-        android:paddingStart="2dp">
+        android:paddingStart="16dp">
 
         <LinearLayout
             android:id="@+id/tracks"
@@ -44,9 +60,23 @@
 
     <FrameLayout
         android:id="@+id/footer"
+        android:layout_marginStart="8dp"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@id/scroll" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scroll" >
+
+        <com.gsd.mpm.materialpopupmenu.GoogleTextView
+            android:id="@+id/menu_subTitle"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:layout_gravity="center|start"
+            android:layout_marginStart="16dp"
+            style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+            android:text="Bottom Text"/>
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/arrow_down"

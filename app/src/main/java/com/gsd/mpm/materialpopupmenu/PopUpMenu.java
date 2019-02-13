@@ -34,6 +34,8 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private ViewGroup mTrack;
     private OnActionItemClickListener mItemClickListener;
     private OnDismissListener mDismissListener;
+    private TextView menuTitle, menuSubTitle;
+    private OnClickListener subTitleClickListener;
 
     private View startTrack, endTrack;
     private Drawable mDrawableFooter, mDrawableHeader, wrappedHeader, wrappedFooter, mDrawableBody, wrappedBody, mDrawableTrack, wrappedTrack;
@@ -48,6 +50,8 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private boolean isEnabled;
     private boolean hasTitles;
     private boolean isTrackEnabled;
+    private boolean hasTitle;
+    private boolean hasSubTitle;
 
     private int mChildPos;
     private int mAnimStyle;
@@ -74,8 +78,18 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         setRootViewId(R.layout.quick_action_menu);
     }
 
+    //Set Menu Title or Text
+    public void setMenuTitle (String menuTitleString){
+        menuTitle.setText(menuTitleString);
+    }
+
+    //Set Menu SubTitle or Text
+    public void setSubMenuTitle (String menuSubTitleString){
+        menuSubTitle.setText(menuSubTitleString);
+    }
+
     public void setScrollColor(int scrollColor) {
-        this.mScrollColor = ContextCompat.getColor(mContext, scrollColor);
+        this.mScrollColor = scrollColor;
 
         mDrawableBody = ContextCompat.getDrawable(mContext, R.drawable.scroll_background);
         assert mDrawableBody != null;
@@ -86,7 +100,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     }
 
     public void setTrackColor(int trackColor) {
-        this.mTrackColor = ContextCompat.getColor(mContext, trackColor);
+        this.mTrackColor = trackColor;
 
         mDrawableTrack = ContextCompat.getDrawable(mContext, R.drawable.track_background);
         assert mDrawableTrack != null;
@@ -99,7 +113,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     }
 
     public void setBodyColor(int bodyColor) {
-        this.mBodyColor = ContextCompat.getColor(mContext, bodyColor);
+        this.mBodyColor = bodyColor;
 
         mDrawableHeader = ContextCompat.getDrawable(mContext, R.drawable.qa_round_top);
         assert mDrawableHeader != null;
@@ -154,6 +168,29 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         endTrack = mRootView.findViewById(R.id.end_track);
         scroll = mRootView.findViewById(R.id.scroll);
 
+        menuTitle = mRootView.findViewById(R.id.menu_title);
+        menuSubTitle = mRootView.findViewById(R.id.menu_subTitle);
+
+        if(!hasTitle){
+            menuTitle.setVisibility(View.VISIBLE);
+        }else{
+            menuTitle.setVisibility(View.GONE);
+        }
+
+        if(!hasSubTitle){
+            menuSubTitle.setVisibility(View.VISIBLE);
+        }else{
+            menuSubTitle.setVisibility(View.GONE);
+        }
+
+        if(!isLight){
+            menuTitle.setTextColor(Color.WHITE);
+            menuSubTitle.setTextColor(Color.WHITE);
+        }else{
+            menuTitle.setTextColor(Color.BLACK);
+            menuSubTitle.setTextColor(Color.BLACK);
+        }
+
         scroll.setHorizontalScrollBarEnabled(isEnabled);
 
         setContentView(mRootView);
@@ -173,6 +210,16 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     //Set Light or Dark styled icons and text
     public void setLightTheme(boolean isLight) {
         this.isLight = isLight;
+    }
+
+    //Enable a Menu Title
+    public void hasTitle(boolean hasTitle) {
+        this.hasTitle = hasTitle;
+    }
+
+    //Enable a Clickable SubTitle for Menu
+    public void hasSubTitle(boolean hasSubTitle) {
+        this.hasSubTitle = hasSubTitle;
     }
 
     //Toggle Tracks
@@ -332,6 +379,10 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         setOnDismissListener(this);
 
         mDismissListener = listener;
+    }
+
+    public void setSubTitleOnClickListener(OnClickListener subTitleOnClickListener){
+        menuSubTitle.setOnClickListener(subTitleOnClickListener);
     }
 
     @Override
