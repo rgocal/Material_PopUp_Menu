@@ -171,26 +171,6 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         menuTitle = mRootView.findViewById(R.id.menu_title);
         menuSubTitle = mRootView.findViewById(R.id.menu_subTitle);
 
-        if(!hasTitle){
-            menuTitle.setVisibility(View.VISIBLE);
-        }else{
-            menuTitle.setVisibility(View.GONE);
-        }
-
-        if(!hasSubTitle){
-            menuSubTitle.setVisibility(View.VISIBLE);
-        }else{
-            menuSubTitle.setVisibility(View.GONE);
-        }
-
-        if(!isLight){
-            menuTitle.setTextColor(Color.WHITE);
-            menuSubTitle.setTextColor(Color.WHITE);
-        }else{
-            menuTitle.setTextColor(Color.BLACK);
-            menuSubTitle.setTextColor(Color.BLACK);
-        }
-
         scroll.setHorizontalScrollBarEnabled(isEnabled);
 
         setContentView(mRootView);
@@ -210,16 +190,33 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     //Set Light or Dark styled icons and text
     public void setLightTheme(boolean isLight) {
         this.isLight = isLight;
+        if(isLight){
+            menuTitle.setTextColor(Color.WHITE);
+            menuSubTitle.setTextColor(Color.WHITE);
+        }else{
+            menuTitle.setTextColor(Color.BLACK);
+            menuSubTitle.setTextColor(Color.BLACK);
+        }
     }
 
     //Enable a Menu Title
     public void hasTitle(boolean hasTitle) {
         this.hasTitle = hasTitle;
+        if(hasTitle){
+            menuTitle.setVisibility(View.VISIBLE);
+        }else{
+            menuTitle.setVisibility(View.GONE);
+        }
     }
 
     //Enable a Clickable SubTitle for Menu
     public void hasSubTitle(boolean hasSubTitle) {
         this.hasSubTitle = hasSubTitle;
+        if(hasSubTitle){
+            menuSubTitle.setVisibility(View.VISIBLE);
+        }else{
+            menuSubTitle.setVisibility(View.GONE);
+        }
     }
 
     //Toggle Tracks
