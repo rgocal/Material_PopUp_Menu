@@ -14,8 +14,7 @@ https://www.instagram.com/p/BqbFtOLAUOT/?utm_source=ig_web_copy_link
 	}
   
   	dependencies {
-	        implementation 'com.github.rgocal:Material_PopUp_Menu:1.10'
-
+		        implementation 'com.github.rgocal:Material_PopUp_Menu:1.10.01'
 	}
   
   #Add Color Strings (optional)
