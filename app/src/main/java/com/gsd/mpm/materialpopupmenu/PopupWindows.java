@@ -1,18 +1,11 @@
 package com.gsd.mpm.materialpopupmenu;
 
-import android.annotation.SuppressLint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.View.OnTouchListener;
-
-import android.widget.PopupWindow;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 
 public class PopupWindows {
 
@@ -23,19 +16,9 @@ public class PopupWindows {
     WindowManager mWindowManager;
 
     PopupWindows(Context context) {
+        super();
         mContext = context;
         mWindow = new PopupWindow(context);
-        mWindow.setTouchInterceptor(new OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    mWindow.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 
@@ -49,12 +32,10 @@ public class PopupWindows {
         if (mRootView == null)
             throw new IllegalStateException("Needs a root view!");
         onShow();
-        if (mBackground == null)
-            mWindow.setBackgroundDrawable(new BitmapDrawable());
-        else
+
             mWindow.setBackgroundDrawable(mBackground);
-        mWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        mWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        mWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         mWindow.setTouchable(true);
         mWindow.setFocusable(true);
         mWindow.setOutsideTouchable(true);
