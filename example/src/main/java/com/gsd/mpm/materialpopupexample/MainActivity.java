@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         //Set Track visiblity (LEFT and RIGHT DIVIDERS)
         mQuickAction.setEnableTracks(false);
         //Set Menu Title
-        mQuickAction.hasSubTitle(true);
+        mQuickAction.hasTitle(true);
         String menuTitle = "Material Popup";
         mQuickAction.setMenuTitle(menuTitle);
         //Set Menu SubTitle
