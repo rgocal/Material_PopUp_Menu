@@ -14,8 +14,7 @@ https://www.instagram.com/p/BqbFtOLAUOT/?utm_source=ig_web_copy_link
 	}
   
   	dependencies {
-	        implementation 'com.github.rgocal:Material_PopUp_Menu:1.05'
-
+	        implementation 'com.github.rgocal:Material_PopUp_Menu:1.10'
 
 	}
   
@@ -50,7 +49,7 @@ Initialize the Popup Menu
 
 	final PopUpMenu mQuickAction = new PopUpMenu(context);
 		
-Modify the Menu to your liking. Set animate track to true if you would like to see it bounce into place. Set light theme to true if you want light icons vs dark icons. Set scrollbar enabled if you want to see a scrollbar in the menu since its a horizontal menu. Anim Style has 4 variations, check out the source code of the library to decide what you want or set it to 4 for the sysytem to decide on its own. Set titles to true if you want your items to have titles under their icons. Set tracks to true if you wish to have a container track interface.
+Modify the Menu to your liking. Set animate track to true if you would like to see it bounce into place. Set light theme to true if you want light icons vs dark icons. Set scrollbar enabled if you want to see a scrollbar in the menu since its a horizontal menu. Anim Style has 4 variations, check out the source code of the library to decide what you want or set it to 4 for the sysytem to decide on its own. Set titles to true if you want your items to have titles under their icons. Set tracks to true if you wish to have a container track interface. Enable Menu Title or Menu SubTitle if you'd like your menu to have Titles. The subTitle can be set to have a click listener as well! Do not exceed the menu legth with your Strings or your menu's margin position will be off.
 
         mQuickAction.mAnimateTrack(true);
         mQuickAction.setLightTheme(true);
@@ -58,6 +57,20 @@ Modify the Menu to your liking. Set animate track to true if you would like to s
         mQuickAction.setAnimStyle(4);
         mQuickAction.setHasTitles(true);
 	mQuickAction.setEnableTracks(true);
+	
+        mQuickAction.hasSubTitle(true);
+        String menuTitle = "Menu Title";
+        mQuickAction.setMenuTitle(menuTitle);
+	
+        mQuickAction.hasSubTitle(true);
+        String menuSubTitle = "Menu SubTitle";
+        mQuickAction.setSubMenuTitle(menuSubTitle);
+        mQuickAction.setSubTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "This is pretty cool", Toast.LENGTH_SHORT).show();
+            }
+        });
 	
 Programically set colors to views. Scroll color is the background menu color. Track colors are divider colors on Start and End. Body color is the frame and arrow of the menu.
 
