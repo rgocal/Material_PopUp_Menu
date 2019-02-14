@@ -1,7 +1,7 @@
 package com.gsd.mpm.materialpopupmenu;
 
-import android.graphics.drawable.Drawable;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 public class ActionItem {
 
