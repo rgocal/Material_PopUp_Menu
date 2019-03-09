@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -156,9 +157,11 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         mTrack = mRootView.findViewById(R.id.tracks);
 
         //Set the pop colors by strings if desired
-        mScrollColor = mContext.getColor(R.color.popup_scroll_color);
-        mTrackColor = mContext.getColor(R.color.popup_track_color);
-        mBodyColor = mContext.getColor(R.color.popup_body_color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mScrollColor = mContext.getColor(R.color.popup_scroll_color);
+            mTrackColor = mContext.getColor(R.color.popup_track_color);
+            mBodyColor = mContext.getColor(R.color.popup_body_color);
+        }
 
         //Initialize the IDs
         mArrowDown = mRootView.findViewById(R.id.arrow_down);
