@@ -17,7 +17,7 @@ allprojects {
 }
   
 dependencies {
-	implementation 'com.github.rgocal:Material_PopUp_Menu:v1.10.2'
+	implementation 'com.github.rgocal:Material_PopUp_Menu:1.15'
 }
 ```
   
