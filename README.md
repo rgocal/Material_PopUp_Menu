@@ -2,7 +2,7 @@
 
 [![JitPack](https://jitpack.io/v/rgocal/Material_PopUp_Menu.svg)](https://jitpack.io/#rgocal/Material_PopUp_Menu)
 
-A nostalgic dialog action menu from Android 2.3 re-invented for Material Design. This popup menu was originally used in ADW Launcher from CM7. I wanted something nostalgic to return in Sapphyx Launcher and came up with this rather simple library that can be used for a number of things. Very useful in listview or recyclerview long click popups. I am seeking some help from material design devs to make it look even more cleaner. If you want to contribute, theirs a todo list at the bottom! Material Popup was originally built for my Launcher Project Sapphyx but alot of my users liked the idea of it returning, So I extracted it as a library. Enjoy! 
+A nostalgic dialog action menu from Android 2.3 re-invented for Material Design. This popup menu was originally used in ADW Launcher from CM7. I wanted something nostalgic and usefull to use in my launcher projects and this was it. Very useful in listview or recyclerview long click popups. Material Popup was originally built for my Launcher Project Sapphyx but alot of my users liked the idea of it returning, So I extracted it as a library. Enjoy! 
 
 ![Preview Image](./.github/images/preview.jpg?raw=true)
 ![Preview Image](./.github/images/preview_new.jpg?raw=true)
@@ -38,16 +38,19 @@ Add these color strings to your project only if you plan to set the colors to th
 <color name="popup_track_color">@android:color/holo_blue_dark</color>
 ```
     
-    
-## Keeping It Simple
+## Action List
 
-Add some Action Items you will want in your menu. Each action requires an ID, a Title, and a Resource. The ID represents the position of the item. You can set boolean toggles to these IDs to programically hide them if you wish to add customization to your menu.
+There are 2 types of Menus and what actions we add matters. If you are planning to use only the Horizontal Menu, use small titles (8-12 characters max). If you plan to have actions with long titles (12-24 characters), you will use these in the Vertical Menu. Each action requires an ID, a Title, and a Resource. The ID represents the position of the item. You can set boolean toggles to these IDs to programically hide them if you wish to add customization to your menu.
 
 ```java
 final ActionItem dummyOne = new ActionItem(1, "Dummy 1", getResources().getDrawable(R.drawable.ic_settings));
 final ActionItem dummyTwo = new ActionItem(2, "Dummy 2", getResources().getDrawable(R.drawable.ic_settings));
 final ActionItem dummyThree = new ActionItem(3, "Dummy 3", getResources().getDrawable(R.drawable.ic_settings));
+
+final ActionItem dummyThree = new ActionItem(3, "Long Dummy Item", getResources().getDrawable(R.drawable.ic_settings));
 ```
+    
+## Keeping It Simple
 	
 Make them Stick or UnSticky. Making them Sticky means after clicking the option, the menu is still popped up. If they are UnSticky, The menu will dismiss after the item has been clicked.
 
@@ -63,45 +66,41 @@ Initialize the Popup Menu
 final PopUpMenu mQuickAction = new PopUpMenu(context);
 ```
 		
-Modify the Menu to your liking. Set animate track to true if you would like to see it bounce into place. Set light theme to true if you want light icons vs dark icons. Set scrollbar enabled if you want to see a scrollbar in the menu since its a horizontal menu. Anim Style has 4 variations, check out the source code of the library to decide what you want or set it to 4 for the sysytem to decide on its own. Set titles to true if you want your items to have titles under their icons. Set tracks to true if you wish to have a container track interface. Enable Menu Title or Menu SubTitle if you'd like your menu to have Titles. The subTitle can be set to have a click listener as well! Do not exceed the menu legth with your Strings or your menu's margin position will be off.
+Modify the Menu to your liking. Set animate track to true if you would like to see it bounce into place. Set light theme to true if you want light icons vs dark icons. Set scrollbar enabled if you want to see a scrollbar. Anim Style has 5 variations, check out the source code of the library to decide what you want or set it to 4 for the sysytem to decide on its own. Set action titles to true if you want your items to have titles under their icons. Do not exceed the menu legth with your Strings or your menu's margin position will be off.
+
+To enable the vertical menu expansion, you need to enable it. By enabling it, you also allow your menu to have a menu title if you wish for it to have one. This enables a new view group allowing your menu to grow to more possibilities.
 
 ```java
 mQuickAction.mAnimateTrack(true);
 mQuickAction.setLightTheme(true);
 mQuickAction.setScrollBar(false);
 mQuickAction.setAnimStyle(4);
-mQuickAction.setHasTitles(true);
-mQuickAction.setEnableTracks(true);
+mQuickAction.setHasActionTitles(true);
 
-mQuickAction.hasSubTitle(true);
-String menuTitle = "Menu Title";
+mQuickAction.hasVerticalExpansion(true);
+mQuickAction.setHasHeaderTitle(true);
+String menuTitle = "Material Popup";
 mQuickAction.setMenuTitle(menuTitle);
 
-mQuickAction.hasSubTitle(true);
-String menuSubTitle = "Menu SubTitle";
-mQuickAction.setSubMenuTitle(menuSubTitle);
-mQuickAction.setSubTitleOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Toast.makeText(MainActivity.this, "This is pretty cool", Toast.LENGTH_SHORT).show();
-    }
-});
 ```
 	
-Programically set colors to views. Scroll color is the background menu color. Track colors are divider colors on Start and End. Body color is the frame and arrow of the menu.
+Programically tint the backgrounds to the menu. This comes in handy when and if you want to extract a color from an object to apply to the menu. You can also style the menu by overriding the color strings in your project but this will only work past Android 6.
 
 ```java
-mQuickAction.setScrollColor(R.color.orange);
-mQuickAction.setTrackColor(R.color.orange);
-mQuickAction.setBodyColor(R.color.orange);
+mQuickAction.setHorizontalScrollColor(ContextCompat.getColor(this, R.color.orange));
+mQuickAction.setVertScrollColor(ContextCompat.getColor(this, R.color.orange));
+mQuickAction.setTitleBackgroundColor(ContextCompat.getColor(this, R.color.orange));
+mQuickAction.setOuterColor(ContextCompat.getColor(this, R.color.orang
 ```
 	
-Add your items your created up top to your menu. This is where you can set boolean if statements to the IDs if you want to toggle them in your menu for customization.
+Add your items you created up top, to your menu. This is where you can set boolean if statements to the IDs if you want to toggle them in your menu for customization. Horizontal menu should have anywhere from 3-7 items while the Vertical menu should have anywhere from 1-4 items. The guidelines are the same as if they were launcher shortcuts in the Pixel Launcher popups.
 
 ```java
 mQuickAction.addActionItem(dummyOne);
 mQuickAction.addActionItem(dummyTwo);
 mQuickAction.addActionItem(dummyThree);
+
+mQuickAction.addVerticalActionItem(dummyVertOne);
 ```
 	
 Set a click listener for each item.
@@ -142,4 +141,3 @@ Popup Menu Shouldn't be used in all menu cases. The most helpfull cases are on l
 
 # ToDo List
 - Badge Support for Action Items
-- Vertical Orientation mode? 
