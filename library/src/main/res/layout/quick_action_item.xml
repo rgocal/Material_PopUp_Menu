@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:padding="6dp"
+    android:padding="16dp"
     android:clickable="true"
     android:focusable="true"
     android:background="?android:selectableItemBackground">
@@ -20,8 +20,8 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
         android:textSize="12sp"
-        android:text="title"/>
+        android:text="Action"/>
 
 </LinearLayout>

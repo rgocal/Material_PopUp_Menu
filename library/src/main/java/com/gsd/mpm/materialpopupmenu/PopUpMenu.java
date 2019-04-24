@@ -19,7 +19,9 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,46 +35,44 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private ImageView mArrowUp, mArrowDown;
     private Animation mTrackAnim;
     private LayoutInflater inflater;
-    private ViewGroup mTrack;
+    private ViewGroup mTrack, mVertTrack;
     private OnActionItemClickListener mItemClickListener;
     private OnDismissListener mDismissListener;
-    private TextView menuTitle, menuSubTitle;
-    private OnClickListener subTitleClickListener;
+    private TextView menuTitle;
 
-    private View startTrack, endTrack;
-    private Drawable mDrawableFooter, mDrawableHeader, wrappedHeader, wrappedFooter, mDrawableBody, wrappedBody, mDrawableTrack, wrappedTrack;
-    private FrameLayout header, footer;
+    private LinearLayout header;
     private HorizontalScrollView scroll;
+    private ScrollView vertScroll;
+    private View menu_header, menu_footer, top_menu_footer, top_menu_header;
 
     private List<ActionItem> mActionItemList = new ArrayList<>();
+    private List<ActionItem> mActionItemVerticalList = new ArrayList<>();
 
     private boolean mDidAction;
     private boolean mAnimateTrack;
     private boolean isLight;
     private boolean isEnabled;
     private boolean hasTitles;
-    private boolean isTrackEnabled;
-    private boolean hasTitle;
-    private boolean hasSubTitle;
 
-    private int mChildPos;
+    private int mChildPos, mVertChildPos;
     private int mAnimStyle;
 
     private static final int ANIM_GROW_FROM_LEFT = 1;
     private static final int ANIM_GROW_FROM_RIGHT = 2;
     private static final int ANIM_GROW_FROM_CENTER = 3;
     private static final int ANIM_AUTO = 4;
+    private static final int ANIM_NONE = 5;
 
-    private int mScrollColor;
+    private int mScrollVertColor, mScrollHorizontalColor, mTitleBkgColor;
     private int mBodyColor;
-    private int mTrackColor;
-
-    private int i;
-    private boolean onTop;
-    private int rootWidth, rootHeight, screenWidth, xPos, yPos;
+    private boolean enableHeaderTitle;
 
     private ActionItem getActionItem(int index) {
         return mActionItemList.get(index);
+    }
+
+    private ActionItem getVertActionItem(int index) {
+        return mActionItemVerticalList.get(index);
     }
 
     public PopUpMenu(Context context) {
@@ -85,58 +85,64 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         menuTitle.setText(menuTitleString);
     }
 
-    //Set Menu SubTitle or Text
-    public void setSubMenuTitle (String menuSubTitleString){
-        menuSubTitle.setText(menuSubTitleString);
-    }
+    public void setTitleBackgroundColor(int scrollColor) {
+        this.mTitleBkgColor = scrollColor;
 
-    public void setScrollColor(int scrollColor) {
-        this.mScrollColor = scrollColor;
-
-        mDrawableBody = ContextCompat.getDrawable(mContext, R.drawable.scroll_background);
+        Drawable mDrawableBody = ContextCompat.getDrawable(mContext, R.drawable.scroll_background);
         assert mDrawableBody != null;
-        wrappedBody = DrawableCompat.wrap(mDrawableBody);
-        DrawableCompat.setTint(wrappedBody, mScrollColor);
+        Drawable wrappedBody = DrawableCompat.wrap(mDrawableBody);
+        DrawableCompat.setTint(wrappedBody, mTitleBkgColor);
         wrappedBody.invalidateSelf();
+
+        menuTitle.setBackground(wrappedBody);
+    }
+
+    public void setHorizontalScrollColor(int scrollColor) {
+        this.mScrollHorizontalColor = scrollColor;
+
+        Drawable mDrawableBody = ContextCompat.getDrawable(mContext, R.drawable.scroll_background);
+        assert mDrawableBody != null;
+        Drawable wrappedBody = DrawableCompat.wrap(mDrawableBody);
+        DrawableCompat.setTint(wrappedBody, mScrollHorizontalColor);
+        wrappedBody.invalidateSelf();
+
         scroll.setBackground(wrappedBody);
+        menuTitle.setBackground(wrappedBody);
     }
 
-    public void setTrackColor(int trackColor) {
-        this.mTrackColor = trackColor;
+    public void setVertScrollColor(int scrollColor) {
+        this.mScrollVertColor = scrollColor;
 
-        mDrawableTrack = ContextCompat.getDrawable(mContext, R.drawable.track_background);
-        assert mDrawableTrack != null;
-        wrappedTrack = DrawableCompat.wrap(mDrawableTrack);
-        DrawableCompat.setTint(wrappedTrack, mTrackColor);
-        wrappedTrack.invalidateSelf();
+        Drawable mDrawableBody = ContextCompat.getDrawable(mContext, R.drawable.scroll_background);
+        assert mDrawableBody != null;
+        Drawable wrappedBody = DrawableCompat.wrap(mDrawableBody);
+        DrawableCompat.setTint(wrappedBody, mScrollVertColor);
+        wrappedBody.invalidateSelf();
 
-        startTrack.setBackground(wrappedTrack);
-        endTrack.setBackground(wrappedTrack);
+        vertScroll.setBackground(wrappedBody);
     }
 
-    public void setBodyColor(int bodyColor) {
+    public void setOuterColor(int bodyColor) {
         this.mBodyColor = bodyColor;
 
-        mDrawableHeader = ContextCompat.getDrawable(mContext, R.drawable.qa_round_top);
+        Drawable mDrawableHeader = ContextCompat.getDrawable(mContext, R.drawable.qa_round_top);
         assert mDrawableHeader != null;
-        wrappedHeader = DrawableCompat.wrap(mDrawableHeader);
+        Drawable wrappedHeader = DrawableCompat.wrap(mDrawableHeader);
         DrawableCompat.setTint(wrappedHeader, mBodyColor);
         wrappedHeader.invalidateSelf();
 
-        header.setBackground(wrappedHeader);
+        top_menu_header.setBackground(wrappedHeader);
+        menu_header.setBackground(wrappedHeader);
 
-        mDrawableFooter = ContextCompat.getDrawable(mContext, R.drawable.qa_round_bottom);
+        Drawable mDrawableFooter = ContextCompat.getDrawable(mContext, R.drawable.qa_round_bottom);
         assert mDrawableFooter != null;
-        wrappedFooter = DrawableCompat.wrap(mDrawableFooter);
+        Drawable wrappedFooter = DrawableCompat.wrap(mDrawableFooter);
         DrawableCompat.setTint(wrappedFooter, mBodyColor);
         wrappedFooter.invalidateSelf();
 
-        footer.setBackground(wrappedFooter);
+        menu_footer.setBackground(wrappedFooter);
+        top_menu_footer.setBackground(wrappedFooter);
 
-    }
-
-    public int getScrollColor(){
-        return mScrollColor;
     }
 
     private int getBodyColor(){
@@ -155,27 +161,38 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
 
         mRootView = inflater.inflate(id, null);
         mTrack = mRootView.findViewById(R.id.tracks);
+        mVertTrack = mRootView.findViewById(R.id.vert_tracks);
 
         //Set the pop colors by strings if desired
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mScrollColor = mContext.getColor(R.color.popup_scroll_color);
-            mTrackColor = mContext.getColor(R.color.popup_track_color);
+            mScrollVertColor = mContext.getColor(R.color.popup_scroll_color);
+            mScrollHorizontalColor = mContext.getColor(R.color.popup_scroll_color);
+            mTitleBkgColor = mContext.getColor(R.color.popup_scroll_color);
             mBodyColor = mContext.getColor(R.color.popup_body_color);
         }
 
         //Initialize the IDs
         mArrowDown = mRootView.findViewById(R.id.arrow_down);
         mArrowUp = mRootView.findViewById(R.id.arrow_up);
+
         header = mRootView.findViewById(R.id.header2);
-        footer = mRootView.findViewById(R.id.footer);
-        startTrack = mRootView.findViewById(R.id.start_track);
-        endTrack = mRootView.findViewById(R.id.end_track);
+
+        top_menu_header = mRootView.findViewById(R.id.top_menu_header);
+        menu_header = mRootView.findViewById(R.id.menu_header);
+        top_menu_footer = mRootView.findViewById(R.id.top_menu_footer);
+        menu_footer = mRootView.findViewById(R.id.menu_footer);
+
         scroll = mRootView.findViewById(R.id.scroll);
+        vertScroll = mRootView.findViewById(R.id.vert_scroll);
 
         menuTitle = mRootView.findViewById(R.id.menu_title);
-        menuSubTitle = mRootView.findViewById(R.id.menu_subTitle);
+
+        if(enableHeaderTitle) {
+            menuTitle.setVisibility(View.GONE);
+        }
 
         scroll.setHorizontalScrollBarEnabled(isEnabled);
+        vertScroll.setVerticalScrollBarEnabled(isEnabled);
 
         setContentView(mRootView);
     }
@@ -196,52 +213,91 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         this.isLight = isLight;
         if(isLight){
             menuTitle.setTextColor(Color.WHITE);
-            menuSubTitle.setTextColor(Color.WHITE);
         }else{
             menuTitle.setTextColor(Color.BLACK);
-            menuSubTitle.setTextColor(Color.BLACK);
         }
     }
 
-    //Enable a Menu Title
-    public void hasTitle(boolean hasTitle) {
-        this.hasTitle = hasTitle;
-        if(hasTitle){
-            menuTitle.setVisibility(View.VISIBLE);
+    //Enable a Header
+    public void hasVerticalExpansion(boolean hasHeader) {
+        if(hasHeader){
+            header.setVisibility(View.VISIBLE);
         }else{
-            menuTitle.setVisibility(View.GONE);
+            header.setVisibility(View.GONE);
         }
     }
 
-    //Enable a Clickable SubTitle for Menu
-    public void hasSubTitle(boolean hasSubTitle) {
-        this.hasSubTitle = hasSubTitle;
-        if(hasSubTitle){
-            menuSubTitle.setVisibility(View.VISIBLE);
-        }else{
-            menuSubTitle.setVisibility(View.GONE);
-        }
-    }
-
-    //Toggle Tracks
-    public void setEnableTracks(boolean enableTracks){
-        this.isTrackEnabled = enableTracks;
-        if(isTrackEnabled){
-            startTrack.setVisibility(View.VISIBLE);
-            endTrack.setVisibility(View.VISIBLE);
-        }else {
-            startTrack.setVisibility(View.GONE);
-            endTrack.setVisibility(View.GONE);
-        }
-    }
-
-    public void setHasTitles(boolean hasTitles){
+    public void setHasActionTitles(boolean hasTitles){
         this.hasTitles = hasTitles;
+    }
+
+    public void setHasHeaderTitle(boolean hasTitle){
+        this.enableHeaderTitle = hasTitle;
     }
 
     //Set Scrollbar
     public void setScrollBar(boolean isEnabled) {
         this.isEnabled = isEnabled;
+    }
+
+    //Here we're adding a vertical menu for longer titled actions
+    //Must have header enabled first
+    public void addVerticalActionItem(ActionItem vertAction){
+        mActionItemVerticalList.add(vertAction);
+
+        String title = vertAction.getTitle();
+        Drawable icon = vertAction.getIcon();
+        View container = inflater.inflate(R.layout.quick_action_list_item, null);
+
+        ImageView img = container.findViewById(R.id.iv_icon);
+        ImageView item = container.findViewById(R.id.iv_item);
+        TextView text = container.findViewById(R.id.tv_title);
+
+        if(isLight) {
+            img.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            item.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+
+            text.setTextColor(Color.WHITE);
+        }else{
+            img.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+            item.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+
+            text.setTextColor(Color.BLACK);
+        }
+        if (icon != null) {
+            img.setImageDrawable(icon);
+        } else {
+            img.setVisibility(View.GONE);
+        }
+        if (title != null) {
+            text.setText(title);
+        } else {
+            text.setVisibility(View.GONE);
+        }
+
+        final int pos = mVertChildPos;
+        final int actionId = vertAction.getActionId();
+        container.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(PopUpMenu.this, pos, actionId);
+                }
+                if (!getVertActionItem(pos).isSticky()) {
+                    mDidAction = true;
+                    v.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dismiss();
+                        }
+                    });
+                }
+            }
+        });
+        container.setFocusable(true);
+        container.setClickable(true);
+        mVertTrack.addView(container, mVertChildPos);
+        mVertChildPos++;
     }
 
     public void addActionItem(ActionItem action) {
@@ -297,7 +353,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         });
         container.setFocusable(true);
         container.setClickable(true);
-        mTrack.addView(container, mChildPos+1);
+        mTrack.addView(container, mChildPos);
         mChildPos++;
     }
 
@@ -317,14 +373,14 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         DisplayMetrics displayMetrics = new DisplayMetrics();
 
         mRootView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        rootWidth = mRootView.getMeasuredWidth();
-        rootHeight = mRootView.getMeasuredHeight();
+        int rootWidth = mRootView.getMeasuredWidth();
+        int rootHeight = mRootView.getMeasuredHeight();
         mWindowManager.getDefaultDisplay().getMetrics(displayMetrics);
 
-        screenWidth = displayMetrics.widthPixels;
-        xPos = (screenWidth - rootWidth) / 2;
-        yPos = anchorRect.top - rootHeight;
-        onTop = true;
+        int screenWidth = displayMetrics.widthPixels;
+        int xPos = (screenWidth - rootWidth) / 2;
+        int yPos = anchorRect.top - rootHeight;
+        boolean onTop = true;
         if (rootHeight > anchor.getTop()) {
             yPos = anchorRect.bottom;
             onTop = false;
@@ -333,7 +389,8 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), anchorRect.centerX());
         setAnimationStyle(screenWidth, anchorRect.centerX(), onTop);
         mWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, xPos, yPos);
-        if (mAnimateTrack) mTrack.startAnimation(mTrackAnim);
+        if (mAnimateTrack)
+            mTrack.startAnimation(mTrackAnim);
     }
 
     private void setAnimationStyle(int screenWidth, int requestedX, boolean onTop) {
@@ -362,15 +419,19 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
                 }
 
                 break;
+
+            case ANIM_NONE:
+                mAnimateTrack = false;
+                break;
         }
     }
 
     private void showArrow(int whichArrow, int requestedX) {
-        final View showArrow = (whichArrow == R.id.arrow_up) ? mArrowUp : mArrowDown;
+        final ImageView showArrow = (whichArrow == R.id.arrow_up) ? mArrowUp : mArrowDown;
         final View hideArrow = (whichArrow == R.id.arrow_up) ? mArrowDown : mArrowUp;
         final int arrowWidth = mArrowUp.getMeasuredWidth();
         showArrow.setVisibility(View.VISIBLE);
-        ((ImageView) showArrow).setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_IN);
+        showArrow.setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_IN);
         ViewGroup.MarginLayoutParams param = (ViewGroup.MarginLayoutParams)showArrow.getLayoutParams();
         param.leftMargin = requestedX - arrowWidth / 2;
         hideArrow.setVisibility(View.INVISIBLE);
@@ -378,12 +439,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
 
     public void setOnDismissListener(OnDismissListener listener) {
         setOnDismissListener(this);
-
         mDismissListener = listener;
-    }
-
-    public void setSubTitleOnClickListener(OnClickListener subTitleOnClickListener){
-        menuSubTitle.setOnClickListener(subTitleOnClickListener);
     }
 
     @Override
