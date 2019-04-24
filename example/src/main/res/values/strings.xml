@@ -4,4 +4,6 @@
     <string name="msg_one">This is position 1</string>
     <string name="msg_two">Hello there position 2</string>
     <string name="msg_three">Almost forgot about position 3</string>
+    <string name="msg_four">This is a shortcut action. Longer titled actions!</string>
+    <string name="msg_five">Another action for your eyes</string>
 </resources>

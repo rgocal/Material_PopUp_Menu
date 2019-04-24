@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private int messageOne;
     private int messageTwo;
     private int messageThree;
-    private TextView textView;
+    private int messageFour;
+    private int messageFive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +29,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        textView = findViewById(R.id.textView);
-
         messageOne = R.string.msg_one;
         messageTwo = R.string.msg_two;
         messageThree = R.string.msg_three;
+        messageFour = R.string.msg_four;
+        messageFive = R.string.msg_five;
 
         //Initialize the actions you want
         //Set an ID, a Title, and a Resource
         final ActionItem dummyOne = new ActionItem(1, "Dummy 1", getResources().getDrawable(R.drawable.ic_settings));
         final ActionItem dummyTwo = new ActionItem(2, "Dummy 2", getResources().getDrawable(R.drawable.ic_settings));
         final ActionItem dummyThree = new ActionItem(3, "Dummy 3", getResources().getDrawable(R.drawable.ic_settings));
+
+        final ActionItem dummyVertOne = new ActionItem(4, "Shortcut One", getResources().getDrawable(R.drawable.ic_settings));
+        final ActionItem dummyVertTwo = new ActionItem(5, "Shortcut Two", getResources().getDrawable(R.drawable.ic_settings));
+
 
         //Enable them to be sticky if you want the menu to not dismiss after clicking it
         dummyOne.setSticky(true);
@@ -54,36 +59,37 @@ public class MainActivity extends AppCompatActivity {
         //And again, pretty obvious what this is
         mQuickAction.setScrollBar(false);
         //Set animation style
-        mQuickAction.setAnimStyle(4);
+        mQuickAction.setAnimStyle(1);
         //Set has titles or not
-        mQuickAction.setHasTitles(true);
-        //Set Track visiblity (LEFT and RIGHT DIVIDERS)
-        mQuickAction.setEnableTracks(false);
-        //Set Menu Title
-        mQuickAction.hasTitle(true);
+        mQuickAction.setHasActionTitles(true);
+
+
+        //Enable Header Title and Vertical Menu
+        mQuickAction.hasVerticalExpansion(true);
+        mQuickAction.setHasHeaderTitle(true);
         String menuTitle = "Material Popup";
         mQuickAction.setMenuTitle(menuTitle);
-        //Set Menu SubTitle
-        mQuickAction.hasSubTitle(true);
-        String menuSubTitle = "A nostalgic popup menu with a Material Redesign. This subTitle is clickable!";
-        mQuickAction.setSubMenuTitle(menuSubTitle);
-        mQuickAction.setSubTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "This is pretty cool", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        //Set Popup Colors programically or override the Strings
-        mQuickAction.setScrollColor(ContextCompat.getColor(this, R.color.orange));
-        mQuickAction.setTrackColor(ContextCompat.getColor(this, R.color.orange));
-        mQuickAction.setBodyColor(ContextCompat.getColor(this, R.color.orange));
+        //Set Popup Colors programically or override the project Style
+        mQuickAction.setHorizontalScrollColor(ContextCompat.getColor(this, R.color.orange));
+        mQuickAction.setVertScrollColor(ContextCompat.getColor(this, R.color.orange));
+        mQuickAction.setTitleBackgroundColor(ContextCompat.getColor(this, R.color.orange));
+        mQuickAction.setOuterColor(ContextCompat.getColor(this, R.color.orange));
 
         //Add the actions to the popup menu
         //Try adding if statements sometime to control what actions are present to the menu!
+        //Guidelines: 3-7 items
         mQuickAction.addActionItem(dummyOne);
         mQuickAction.addActionItem(dummyTwo);
         mQuickAction.addActionItem(dummyThree);
+        mQuickAction.addActionItem(dummyTwo);
+        mQuickAction.addActionItem(dummyTwo);
+
+        //Guidelines:1-4 items
+        mQuickAction.addVerticalActionItem(dummyVertOne);
+        mQuickAction.addVerticalActionItem(dummyVertTwo);
+        mQuickAction.addVerticalActionItem(dummyVertTwo);
+        mQuickAction.addVerticalActionItem(dummyVertTwo);
 
         //Add listeners to each action item
         mQuickAction.setOnActionItemClickListener(new PopUpMenu.OnActionItemClickListener() {
@@ -99,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
                 if (actionId == 3) {
                     Toast.makeText(MainActivity.this, messageThree, Toast.LENGTH_SHORT).show();
                 }
+                if (actionId == 4) {
+                    Toast.makeText(MainActivity.this, messageFour, Toast.LENGTH_SHORT).show();
+                }
+                if (actionId == 5) {
+                    Toast.makeText(MainActivity.this, messageFive, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -112,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        final TextView textView = findViewById(R.id.textView);
         final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
