@@ -53,6 +53,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private boolean isLight;
     private boolean isEnabled;
     private boolean hasTitles;
+    private boolean ThemeVertIcons;
 
     private int mChildPos, mVertChildPos;
     private int mAnimStyle;
@@ -202,6 +203,11 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         this.mAnimateTrack = mAnimateTrack;
     }
 
+    //Theme vertical icons (user may want to use colored vector icons "Like me!")
+    public void themeVerticalIcons(boolean enable) {
+        this.ThemeVertIcons = enable;
+    }
+
     //Set a custom anim style
     public int setAnimStyle(int mAnimStyle) {
         this.mAnimStyle = mAnimStyle;
@@ -254,16 +260,23 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
         TextView text = container.findViewById(R.id.tv_title);
 
         if(isLight) {
-            img.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
             item.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
 
             text.setTextColor(Color.WHITE);
         }else{
-            img.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
             item.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
             text.setTextColor(Color.BLACK);
         }
+
+        if(ThemeVertIcons){
+            if(isLight) {
+                img.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            }else{
+                img.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+            }
+        }
+
         if (icon != null) {
             img.setImageDrawable(icon);
         } else {
