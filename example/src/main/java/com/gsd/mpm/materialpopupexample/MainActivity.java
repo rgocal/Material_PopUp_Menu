@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         final ActionItem dummyTwo = new ActionItem(2, "Dummy 2", getResources().getDrawable(R.drawable.ic_settings));
         final ActionItem dummyThree = new ActionItem(3, "Dummy 3", getResources().getDrawable(R.drawable.ic_settings));
 
-        final ActionItem dummyVertOne = new ActionItem(4, "Shortcut One", getResources().getDrawable(R.drawable.ic_settings));
-        final ActionItem dummyVertTwo = new ActionItem(5, "Shortcut Two", getResources().getDrawable(R.drawable.ic_settings));
+        final ActionItem dummyVertOne = new ActionItem(4, "Shortcut One", getResources().getDrawable(R.drawable.ic_android));
+        final ActionItem dummyVertTwo = new ActionItem(5, "Shortcut Two", getResources().getDrawable(R.drawable.ic_android));
 
 
         //Enable them to be sticky if you want the menu to not dismiss after clicking it
@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         mQuickAction.setHasHeaderTitle(true);
         String menuTitle = "Material Popup";
         mQuickAction.setMenuTitle(menuTitle);
+
+        //Set whether or not you want the vertical icons to follow the light/dark theme
+        //If set to false, it will allow the icon to retain its colors
+        //Usefull if being used like a launcher app shortcut menu list
+        mQuickAction.themeVerticalIcons(true);
 
         //Set Popup Colors programically or override the project Style
         mQuickAction.setHorizontalScrollColor(ContextCompat.getColor(this, R.color.orange));
