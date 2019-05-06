@@ -19,7 +19,7 @@ allprojects {
 }
   
 dependencies {
-	implementation 'com.github.rgocal:Material_PopUp_Menu:2.00'
+	        implementation 'com.github.rgocal:Material_PopUp_Menu:2.01'
 }
 ```
   
@@ -81,6 +81,8 @@ mQuickAction.hasVerticalExpansion(true);
 mQuickAction.setHasHeaderTitle(true);
 String menuTitle = "Material Popup";
 mQuickAction.setMenuTitle(menuTitle);
+
+mQuickAction.themeVerticalIcons(true);
 
 ```
 	
