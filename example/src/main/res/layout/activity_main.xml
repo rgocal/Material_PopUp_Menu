@@ -6,13 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:text="Hello World!"
-        android:layout_gravity="center"/>
+        android:layout_marginBottom="56dp"
+        android:layout_gravity="bottom"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

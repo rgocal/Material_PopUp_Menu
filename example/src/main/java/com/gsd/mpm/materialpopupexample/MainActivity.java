@@ -12,6 +12,10 @@ import com.gsd.mpm.materialpopupmenu.PopUpMenu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private int messageThree;
     private int messageFour;
     private int messageFive;
+
+    private ArrayList<DataItems> itemList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,58 @@ public class MainActivity extends AppCompatActivity {
         messageThree = R.string.msg_three;
         messageFour = R.string.msg_four;
         messageFive = R.string.msg_five;
+
+        final RecyclerView itemGrid = findViewById(R.id.list);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
+        itemGrid.setLayoutManager(layoutManager);
+        MyAdapter myAdapter = new MyAdapter(this, itemList, new CustomClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+                mQuickAction.setMenuTitle(itemList.get(position).getTitle());
+
+                mQuickAction.setVertScrollColor(itemList.get(position).getColor());
+                mQuickAction.setTitleBackgroundColor(itemList.get(position).getColor());
+                mQuickAction.setHorizontalScrollColor(itemList.get(position).getColor());
+                mQuickAction.setOuterColor(itemList.get(position).getColor());
+
+                mQuickAction.show(itemGrid.getChildAt(position));
+
+            }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+
+            }
+        });
+        itemGrid.setAdapter(myAdapter);
+
+        itemList.add(new DataItems(1, "ONE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "TWO", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "THREE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+        itemList.add(new DataItems(1, "FOUR", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "FIVE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "SIX", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+        itemList.add(new DataItems(1, "SEVEN", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "EIGHT", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "NINE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+        itemList.add(new DataItems(1, "TEN", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "ELEVEN", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "TWELVE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+
+
+        itemList.add(new DataItems(1, "ONE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "TWO", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "THREE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+        itemList.add(new DataItems(1, "FOUR", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "FIVE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "SIX", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+        itemList.add(new DataItems(1, "SEVEN", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "EIGHT", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "NINE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
+        itemList.add(new DataItems(1, "TEN", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorAccent)));
+        itemList.add(new DataItems(1, "ELEVEN", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimary)));
+        itemList.add(new DataItems(1, "TWELVE", "Number", ContextCompat.getDrawable(this, R.drawable.ic_android), ContextCompat.getColor(this,R.color.colorPrimaryDark)));
 
         //Initialize the actions you want
         //Set an ID, a Title, and a Resource
@@ -129,12 +187,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        final TextView textView = findViewById(R.id.textView);
         final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mQuickAction.show(textView);
+                mQuickAction.show(fab);
             }
         });
     }
