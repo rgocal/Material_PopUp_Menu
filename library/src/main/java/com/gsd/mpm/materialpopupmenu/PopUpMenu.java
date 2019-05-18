@@ -16,7 +16,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,11 +23,11 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PopUpMenu extends PopupWindows implements OnDismissListener {
 
@@ -44,9 +43,6 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private HorizontalScrollView scroll;
     private ScrollView vertScroll;
     private View menu_header, menu_footer, top_menu_footer, top_menu_header;
-
-    private List<ActionItem> mActionItemList = new ArrayList<>();
-    private List<ActionItem> mActionItemVerticalList = new ArrayList<>();
 
     private boolean mDidAction;
     private boolean mAnimateTrack;
@@ -68,10 +64,14 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private int mBodyColor;
     private boolean enableHeaderTitle;
 
+    private float iconDensity;
+
+    private List<ActionItem> mActionItemList = new ArrayList<>();
+    private List<ActionItem> mActionItemVerticalList = new ArrayList<>();
+
     private ActionItem getActionItem(int index) {
         return mActionItemList.get(index);
     }
-
     private ActionItem getVertActionItem(int index) {
         return mActionItemVerticalList.get(index);
     }
@@ -79,6 +79,7 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     public PopUpMenu(Context context) {
         super(context);
         setRootViewId(R.layout.quick_action_menu);
+        iconDensity = context.getResources().getDisplayMetrics().density * 48;
     }
 
     //Set Menu Title or Text
@@ -209,9 +210,8 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     }
 
     //Set a custom anim style
-    public int setAnimStyle(int mAnimStyle) {
+    public void setAnimStyle(int mAnimStyle) {
         this.mAnimStyle = mAnimStyle;
-        return mAnimStyle;
     }
 
     //Set Light or Dark styled icons and text
@@ -442,10 +442,11 @@ public class PopUpMenu extends PopupWindows implements OnDismissListener {
     private void showArrow(int whichArrow, int requestedX) {
         final ImageView showArrow = (whichArrow == R.id.arrow_up) ? mArrowUp : mArrowDown;
         final View hideArrow = (whichArrow == R.id.arrow_up) ? mArrowDown : mArrowUp;
-        final int arrowWidth = mArrowUp.getMeasuredWidth();
+        final int arrowWidth = (int) iconDensity;
         showArrow.setVisibility(View.VISIBLE);
         showArrow.setColorFilter(getBodyColor(), PorterDuff.Mode.SRC_IN);
-        ViewGroup.MarginLayoutParams param = (ViewGroup.MarginLayoutParams)showArrow.getLayoutParams();
+        ViewGroup.MarginLayoutParams param = (ViewGroup.MarginLayoutParams)
+                showArrow.getLayoutParams();
         param.leftMargin = requestedX - arrowWidth / 2;
         hideArrow.setVisibility(View.INVISIBLE);
     }

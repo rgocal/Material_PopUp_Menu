@@ -32,14 +32,12 @@ public class PopupWindows {
         if (mRootView == null)
             throw new IllegalStateException("Needs a root view!");
         onShow();
-
-            mWindow.setBackgroundDrawable(mBackground);
+        mWindow.setBackgroundDrawable(mBackground);
         mWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         mWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         mWindow.setTouchable(true);
         mWindow.setFocusable(true);
         mWindow.setOutsideTouchable(true);
-
         mWindow.setContentView(mRootView);
     }
 

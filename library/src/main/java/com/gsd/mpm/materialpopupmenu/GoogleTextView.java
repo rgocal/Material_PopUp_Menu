@@ -16,7 +16,6 @@ public class GoogleTextView extends AppCompatTextView {
     public GoogleTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFont();
-
     }
 
     private void setFont() {
@@ -27,9 +26,7 @@ public class GoogleTextView extends AppCompatTextView {
     public GoogleTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setFont();
-
     }
-
 
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
@@ -42,7 +39,6 @@ public class GoogleTextView extends AppCompatTextView {
         if(focused)
             super.onWindowFocusChanged(focused);
     }
-
 
     @Override
     public boolean isFocused() {
