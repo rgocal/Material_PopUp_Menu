@@ -2,7 +2,7 @@
 
 [![JitPack](https://jitpack.io/v/rgocal/Material_PopUp_Menu.svg)](https://jitpack.io/#rgocal/Material_PopUp_Menu)
 
-Build Notes 11/1
+Build Notes 11/1/20
 I am currently rebuilding this library from scratch to offer new menu options and a better Material Component like nature to match new guidelines. I will be releasing this update as soon as I feel its ready for the public and a more natural demo app has been created to demonstrate its purpose. I will update the readme once the update has been published. 
 Build Notes End
 
