@@ -6,12 +6,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/button_group_scroll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="center">
+        <com.google.android.material.chip.Chip android:id="@+id/button_one" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Widget.MaterialComponents.Chip.Action" android:text="Vertical List"/>
+        <com.google.android.material.chip.Chip android:id="@+id/button_two" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Widget.MaterialComponents.Chip.Action" android:text="Horizontal List"/>
+        <com.google.android.material.chip.Chip android:id="@+id/button_three" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Widget.MaterialComponents.Chip.Action" android:text="Pixel"/>
+        <com.google.android.material.chip.Chip android:id="@+id/button_four" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Widget.MaterialComponents.Chip.Action" android:text="Vertical"/>
+    </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -22,6 +26,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:title="Dynamic Menus"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -39,7 +44,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/down_arrow"
+        android:src="@android:drawable/button_onoff_indicator_off"
         app:layout_anchor="@id/bottom_app_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
