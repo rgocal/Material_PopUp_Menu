@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:selectableItemBackground">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/action_icon_top"
+        android:visibility="gone"
+        android:layout_width="22dp"
+        android:layout_height="22dp"/>
+
+    <com.gocalsd.dynamicpopupmenu.library.views.GoogleTextView
+        android:id="@+id/action_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item One"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/action_icon_bottom"
+        android:visibility="gone"
+        android:layout_width="22dp"
+        android:layout_height="22dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true">
+
+    <View
+        android:id="@+id/arrow_up"
+        android:layout_width="10dp"
+        android:layout_height="8dp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/scroll_holder"
+        android:layout_below="@+id/arrow_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:id="@+id/scroll_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:fadingEdgeLength="5dp"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/tracks_horizontal"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"/>
+        </HorizontalScrollView>
+
+        <ScrollView
+            android:id="@+id/scroll_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fadingEdgeLength="5dp"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/tracks_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@color/black"
+                app:dividerPadding="2dp"
+                app:showDividers="middle" />
+        </ScrollView>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        android:id="@+id/arrow_down"
+        android:layout_width="10dp"
+        android:layout_height="8dp"
+        android:layout_below="@+id/scroll_holder"
+        android:layout_marginTop="-2dp" />
+</RelativeLayout>
