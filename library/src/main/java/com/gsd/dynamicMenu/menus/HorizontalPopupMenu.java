@@ -1,4 +1,4 @@
-package com.gocalsd.dynamicpopupmenu.library.menus;
+package com.gsd.dynamicMenu.menus;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,19 +20,17 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.gocalsd.dynamicpopupmenu.R;
-import com.gocalsd.dynamicpopupmenu.library.PopupWindows;
-import com.gocalsd.dynamicpopupmenu.library.data.ActionItem;
-import com.gocalsd.dynamicpopupmenu.library.utils.ColorProvider;
-import com.gocalsd.dynamicpopupmenu.library.views.ArrowDrawable;
-import com.gocalsd.dynamicpopupmenu.library.views.GoogleTextView;
+
 import com.google.android.material.shape.MaterialShapeDrawable;
+import com.gsd.dynamicMenu.PopupWindows;
+import com.gsd.dynamicMenu.data.ActionItem;
+import com.gsd.dynamicMenu.utils.ColorProvider;
+import com.gsd.dynamicMenu.views.ArrowDrawable;
+import com.gsd.dynamicMenu.views.GoogleTextView;
+import com.gsd.mpm.materialpopupmenu.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.gocalsd.dynamicpopupmenu.library.views.ArrowDrawable.ARROW_DOWN;
-import static com.gocalsd.dynamicpopupmenu.library.views.ArrowDrawable.ARROW_UP;
 
 public class HorizontalPopupMenu extends PopupWindows implements OnDismissListener {
 
@@ -83,8 +81,8 @@ public class HorizontalPopupMenu extends PopupWindows implements OnDismissListen
         mDrawableBody.setTint(scrollColor);
         mScrollView.setBackground(mDrawableBody);
 
-        mArrowDown.setBackground(new ArrowDrawable(ARROW_DOWN, scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
-        mArrowUp.setBackground(new ArrowDrawable(ARROW_UP, scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
+        mArrowDown.setBackground(new ArrowDrawable(ArrowDrawable.getArrowDown(), scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
+        mArrowUp.setBackground(new ArrowDrawable(ArrowDrawable.getArrowDown(), scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
     }
 
     private int getMenuColor(){

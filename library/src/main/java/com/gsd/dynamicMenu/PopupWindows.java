@@ -1,4 +1,4 @@
-package com.gocalsd.dynamicpopupmenu.library;
+package com.gsd.dynamicMenu;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

@@ -1,4 +1,4 @@
-package com.gocalsd.dynamicpopupmenu.library.utils;
+package com.gsd.dynamicMenu.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

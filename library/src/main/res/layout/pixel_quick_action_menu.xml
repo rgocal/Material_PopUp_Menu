@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:divider="@color/black"
+                app:divider="@android:color/background_dark"
                 app:dividerPadding="2dp"
                 app:showDividers="middle" />
         </ScrollView>

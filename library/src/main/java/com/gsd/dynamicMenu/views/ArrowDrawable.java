@@ -1,4 +1,4 @@
-package com.gocalsd.dynamicpopupmenu.library.views;
+package com.gsd.dynamicMenu.views;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,8 +13,8 @@ import androidx.annotation.ColorInt;
 
 public class ArrowDrawable extends ColorDrawable {
 
-    public static final int ARROW_UP = 1;
-    public static final int ARROW_DOWN = 2;
+    private static final int ARROW_UP = 1;
+    private static final int ARROW_DOWN = 2;
 
     private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint mShadowPaint = new Paint(mPaint);
@@ -84,6 +84,14 @@ public class ArrowDrawable extends ColorDrawable {
 
     public void setColor(@ColorInt int color) {
         mPaint.setColor(color);
+    }
+
+    public static int getArrowUp(){
+        return ARROW_UP;
+    }
+
+    public static int getArrowDown(){
+        return ARROW_DOWN;
     }
 
     @Override public void setColorFilter(ColorFilter colorFilter) {

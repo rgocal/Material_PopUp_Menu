@@ -15,7 +15,7 @@
         android:layout_width="22dp"
         android:layout_height="22dp"/>
 
-    <com.gocalsd.dynamicpopupmenu.library.views.GoogleTextView
+    <com.gsd.dynamicMenu.views.GoogleTextView
         android:id="@+id/action_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

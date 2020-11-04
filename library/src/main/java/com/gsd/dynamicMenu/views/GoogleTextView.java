@@ -1,4 +1,4 @@
-package com.gocalsd.dynamicpopupmenu.library.views;
+package com.gsd.dynamicMenu.views;
 
 import android.content.Context;
 import android.graphics.Rect;

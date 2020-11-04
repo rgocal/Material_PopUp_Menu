@@ -1,4 +1,4 @@
-package com.gocalsd.dynamicpopupmenu.library.menus;
+package com.gsd.dynamicMenu.menus;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,28 +13,22 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.gocalsd.dynamicpopupmenu.R;
-import com.gocalsd.dynamicpopupmenu.library.PopupWindows;
-import com.gocalsd.dynamicpopupmenu.library.data.ActionItem;
-import com.gocalsd.dynamicpopupmenu.library.utils.ColorProvider;
-import com.gocalsd.dynamicpopupmenu.library.views.ArrowDrawable;
-import com.gocalsd.dynamicpopupmenu.library.views.GoogleTextView;
 import com.google.android.material.shape.MaterialShapeDrawable;
+import com.gsd.dynamicMenu.PopupWindows;
+import com.gsd.dynamicMenu.data.ActionItem;
+import com.gsd.dynamicMenu.utils.ColorProvider;
+import com.gsd.dynamicMenu.views.ArrowDrawable;
+import com.gsd.dynamicMenu.views.GoogleTextView;
+import com.gsd.mpm.materialpopupmenu.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.gocalsd.dynamicpopupmenu.library.views.ArrowDrawable.ARROW_DOWN;
-import static com.gocalsd.dynamicpopupmenu.library.views.ArrowDrawable.ARROW_UP;
 
 public class VerticalListPopupMenu extends PopupWindows implements PopupWindow.OnDismissListener {
 
@@ -75,8 +69,8 @@ public class VerticalListPopupMenu extends PopupWindows implements PopupWindow.O
         mDrawableBody.setTint(scrollColor);
         mScrollView.setBackground(mDrawableBody);
 
-        mArrowDown.setBackground(new ArrowDrawable(ARROW_DOWN, scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
-        mArrowUp.setBackground(new ArrowDrawable(ARROW_UP, scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
+        mArrowDown.setBackground(new ArrowDrawable(ArrowDrawable.getArrowDown(), scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
+        mArrowUp.setBackground(new ArrowDrawable(ArrowDrawable.getArrowUp(), scrollColor, 1, ColorProvider.getDarkerShadeColor(scrollColor)));
     }
 
     private int getMenuColor(){
