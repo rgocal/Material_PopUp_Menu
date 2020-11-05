@@ -2,11 +2,7 @@
 
 [![JitPack](https://jitpack.io/v/rgocal/Material_PopUp_Menu.svg)](https://jitpack.io/#rgocal/Material_PopUp_Menu)
 
-Build Notes 11/1/20
-I am currently rebuilding this library from scratch to offer new menu options and a better Material Component like nature to match new guidelines. I will be releasing this update as soon as I feel its ready for the public and a more natural demo app has been created to demonstrate its purpose. I will update the readme once the update has been published. 
-Build Notes End
-
-A nostalgic dialog action menu from Android 2.3 re-invented for Material Design. This popup menu was originally used in ADW Launcher from CM7. I wanted something nostalgic and usefull to use in my launcher projects and this was it. Very useful in listview or recyclerview long click popups. Material Popup was originally built for my Launcher Project Sapphyx but alot of my users liked the idea of it returning, So I extracted it as a library. Enjoy! 
+A nostalgic dialog action menu from Android 2.3 re-invented for Material Component Design. This popup menu was originally used in ADW Launcher from CM7. I wanted something nostalgic and usefull to use in my launcher projects and this was it. I built this menu in my latest launcher project and decided to share it with the community. It has recently been rewritten from scratch to be smaller, faster and more native to the android os while matching material components in use. This menu should only be used in list or grid views as a guideline. Using it as a native menu for your app is not recomended, use it as 
 
 ![Preview Image](./.github/images/preview.jpg?raw=true)
 ![Preview Image](./.github/images/preview_new.jpg?raw=true)
@@ -26,87 +22,58 @@ dependencies {
 	        implementation 'com.github.rgocal:Material_PopUp_Menu:2.03'
 }
 ```
-  
-## Add Color Strings (optional)
-  
-Add these color strings to your project only if you plan to set the colors to the popup via xml and not via code
-
-```xml
-<!--The body color is the top and bottom headers and the arrow color -->
-<color name="popup_body_color">@android:color/holo_blue_dark</color>
-<!--The scrim color is the scrollbar color if enabled -->
-<color name="popup_scrim_color">@android:color/holo_blue_dark</color>
-<!--The scroll color is the background menu color -->
-<color name="popup_scroll_color">@android:color/holo_blue_dark</color>
-<!--The track color is the menu left and right dividers, set to the same color as the scroll color to disable -->
-<color name="popup_track_color">@android:color/holo_blue_dark</color>
-```
     
 ## Action List
 
-There are 2 types of Menus and what actions we add matters. If you are planning to use only the Horizontal Menu, use small titles (8-12 characters max). If you plan to have actions with long titles (12-24 characters), you will use these in the Vertical Menu. Each action requires an ID, a Title, and a Resource. The ID represents the position of the item. You can set boolean toggles to these IDs to programically hide them if you wish to add customization to your menu.
+There are 4 types of Menus and what actions we add matter. If you are planning to use horizontal menus, use small titles (8-12 characters max). If you plan to have actions with long titles (12-24 characters), you will use these in the Vertical Menus. Each action requires an ID, a Title, a Resource and whether or not its "Sticky". The ID represents the position of the item when it is clicked. Making an item "Sticky" or not means whether or not to dismiss the menu after the item has been clicked or not.
 
 ```java
-final ActionItem dummyOne = new ActionItem(1, "Dummy 1", getResources().getDrawable(R.drawable.ic_settings));
-final ActionItem dummyTwo = new ActionItem(2, "Dummy 2", getResources().getDrawable(R.drawable.ic_settings));
-final ActionItem dummyThree = new ActionItem(3, "Dummy 3", getResources().getDrawable(R.drawable.ic_settings));
+final ActionItem dummyOne = new ActionItem(1, "Dummy 1", getResources().getDrawable(R.drawable.ic_settings), true);
+final ActionItem dummyTwo = new ActionItem(2, "Dummy 2", getResources().getDrawable(R.drawable.ic_settings), false);
+final ActionItem dummyThree = new ActionItem(3, "Dummy 3", getResources().getDrawable(R.drawable.ic_settings), true);
 
-final ActionItem dummyThree = new ActionItem(3, "Long Dummy Item", getResources().getDrawable(R.drawable.ic_settings));
+final ActionItem dummyFour = new ActionItem(4, "Long Dummy Item", getResources().getDrawable(R.drawable.ic_settings), false);
 ```
     
 ## Keeping It Simple
 	
-Make them Stick or UnSticky. Making them Sticky means after clicking the option, the menu is still popped up. If they are UnSticky, The menu will dismiss after the item has been clicked.
-
-```java
-dummyOne.setSticky(true);
-dummyTwo.setSticky(true);
-dummyThree.setSticky(false);
-```
-	
 Initialize the Popup Menu
 
 ```java
-final PopUpMenu mQuickAction = new PopUpMenu(context);
+final HorizontalPopupMenu mQuickAction = new HorizontalPopupMenu(context);
+final PixelPopupMenu mQuickAction = new PixelPopupMenu(context);
+final VerticalListPopupMenu mQuickAction = new VerticalListPopupMenu(context);
+final VerticalPopupMenu mQuickAction = new VerticalPopupMenu(context);
 ```
+
+HorizontalPopupMenu is the orignal Quick Action Menu from CM7's ADW Launcher. This menu is to show a list of quick action items like "Share, Copy, Delete, Open". This menu also shows an icon above or below the title of the item. It comes with a few optional settings for the developer.
+
+VerticalListPopupMenu is a menu that list a title and an icon beside the title. This is more for larger titled menu actions. "Share with Joe Smoe", "Connect with Henry". It comes with a few optional settings for the developer.
+
+VerticalPopupMenu is an icon only menu and its behavior is very similar to VerticalListPopupMenu.
+
+PixelPopupMenu is a replica of Pixel Launchers shortcut menu of which is shown when users long click on an app. This menu is a combo or both vertical and horizontal menus where the user can inflate 2 menus at once. 
 		
-Modify the Menu to your liking. Set animate track to true if you would like to see it bounce into place. Set light theme to true if you want light icons vs dark icons. Set scrollbar enabled if you want to see a scrollbar. Anim Style has 5 variations, check out the source code of the library to decide what you want or set it to 4 for the sysytem to decide on its own. Set action titles to true if you want your items to have titles under their icons. Do not exceed the menu legth with your Strings or your menu's margin position will be off.
-
-To enable the vertical menu expansion, you need to enable it. By enabling it, you also allow your menu to have a menu title if you wish for it to have one. This enables a new view group allowing your menu to grow to more possibilities.
+These menus have serveral options available for environmental reasons or to make the menus more clear to read in certain themes and styles. Feel free to submit issues or suggestions to further enhance the user experience
 
 ```java
-mQuickAction.mAnimateTrack(true);
-mQuickAction.setLightTheme(true);
-mQuickAction.setScrollBar(false);
-mQuickAction.setAnimStyle(4);
+mQuickAction.setGravity(0);
+mQuickAction.setBackgroundRadias(42);
 mQuickAction.setHasActionTitles(true);
-
-mQuickAction.hasVerticalExpansion(true);
-mQuickAction.setHasHeaderTitle(true);
-String menuTitle = "Material Popup";
-mQuickAction.setMenuTitle(menuTitle);
-
-mQuickAction.themeVerticalIcons(true);
-
 ```
 	
-Programically tint the backgrounds to the menu. This comes in handy when and if you want to extract a color from an object to apply to the menu. You can also style the menu by overriding the color strings in your project but this will only work past Android 6.
+Programically tint the background to the menu. This comes in handy when and if you want to extract a color from an object to apply to the menu.
 
 ```java
-mQuickAction.setHorizontalScrollColor(ContextCompat.getColor(this, R.color.orange));
-mQuickAction.setVertScrollColor(ContextCompat.getColor(this, R.color.orange));
-mQuickAction.setTitleBackgroundColor(ContextCompat.getColor(this, R.color.orange));
-mQuickAction.setOuterColor(ContextCompat.getColor(this, R.color.orang
+mQuickAction.setBackgroundColor(colorValue);
 ```
 	
-Add your items you created up top, to your menu. This is where you can set boolean if statements to the IDs if you want to toggle them in your menu for customization. Horizontal menu should have anywhere from 3-7 items while the Vertical menu should have anywhere from 1-4 items. The guidelines are the same as if they were launcher shortcuts in the Pixel Launcher popups.
+Add your items you created up top, to your menu. This is where you can set boolean if statements to the IDs if you want to toggle them in your menu for customization. Horizontal menu should have anywhere from 3-7 items while the Vertical menu should have anywhere from 1-4 items. The guidelines are the same as if they were launcher shortcuts in the Pixel Launcher popups. If you are using the PixelPoupMenu, pay attention to which list your add your menu items.
 
 ```java
 mQuickAction.addActionItem(dummyOne);
 mQuickAction.addActionItem(dummyTwo);
 mQuickAction.addActionItem(dummyThree);
-
-mQuickAction.addVerticalActionItem(dummyVertOne);
 ```
 	
 Set a click listener for each item.
@@ -143,7 +110,10 @@ mQuickAction.setOnDismissListener(new PopUpMenu.OnDismissListener() {
 });
 ```
 
-Popup Menu Shouldn't be used in all menu cases. The most helpfull cases are on listviews or individual menu cases on recyclerview items. Popup Menu was originally used in ADW Launcher to supply menu actions to app shortcuts, now we have shortcut popups bubbles from Pixel Launcher. Let's not let a good menu die off. Let it live and be used. If it works, don't mess with it.
+Popup Menus Shouldn't be used to replace toolbar menus. These menus are specifically designed for items in a list or grid that are inflated by a long click or if the item in the listview has a 3dot menu. These popup menus hide action items you would of normally added in a toolbar or actionbar in the listview item.
 
 # ToDo List
 - Badge Support for Action Items
+- More customization
+- Material Component Guidelines
+- A few more Menu Variants
